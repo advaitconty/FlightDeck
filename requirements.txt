@@ -1,3 +1,3 @@
 pillow
 pyAesCrypt
-pickle
+requests

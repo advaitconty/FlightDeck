@@ -7,6 +7,7 @@ import pyAesCrypt
 import platform
 from pathlib import Path
 import pickle
+import subprocess
 
 BUFFER_SIZE = 64 * 1024
 
@@ -134,13 +135,13 @@ def main_loop():
     Current vault status: {"🔒" if not unlocked else "🔑"}
 
     Commands:
-    help   - show this help message
-    exit   - exit the vault
-    add    - add a new note to your vault
-    list   - list all notes in your vault
-    tree   - show the tree structure of your vault
-    path   - show the current path to your vault
-    rm     - remove a note from your vault
+    help      - show this help message
+    exit      - exit the vault
+    add       - add a new note to your vault
+    tree      - show the tree structure of your vault
+    path      - show the current path to your vault
+    rm        - remove a note from your vault
+    sys [cmd] - run a system command
     """
 
     while vault_entry:
@@ -165,7 +166,39 @@ def main_loop():
         elif command == "help":
             print(help)
         
+        elif command.startswith("add"):
+            print(f"Adding a new note with the title '{command.split(' ', 1)[1]}.md'...")
+            with open(f"{vault_location(platform.system())}/{command.split(' ', 1)[1]}.md", "w") as f:
+                f.write("")
+                print("File created!")
+            
+            try:
+                if platform.system() == "Windows":
+                    subprocess.run(f"notepad {vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+                else:
+                    os.system(f"nano {vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+            except:
+                print("Error opening file. You will need to open it manually.")
+        
+        elif command.startswith("sys"):
+            print(f"Running system command: {command.split(' ', 1)[1]}")
+            subprocess.run(command.split(' ', 1)[1], shell=True)
 
+        elif command.startswith("rm"):
+            print(f"Removing note '{command.split(' ', 1)[1]}.md'...")
+            try:
+                os.remove(f"{vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+                print("File removed!")
+            except FileNotFoundError:
+                print("File not found. Please enter a real file.")
+
+        elif command == "path":
+            print("To add your own file, the path of your vault is:")
+            print(vault_location(platform.system()))
+
+        elif command == "tree":
+            print("Showing tree structure of your vault...")
+            os.system(f"tree {vault_location(platform.system())}")
 
         else:
             print("Invalid command. Type 'help' to see available commands.")

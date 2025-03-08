@@ -1,4 +1,4 @@
-flightdeck v0.2-alpha {}
+flightdeck v1.0-testing {}
 ✈ usage: flightdeck [commands] [options | file (if command requires)] ...
 
 flightdeck is a versatile utility that allows you to do many things. it adds
@@ -8,7 +8,6 @@ commands:
 open [file]        - view an image or markdown file using the commandline.
 solstice           - open Solstice for the commandline, a pomodoro tracker
 tree               - see a file tree within the terminal
-weather [country]  - get weather forecast for your country, country in ISO 3166 alpha 2 format
-secure-vault       - enter the secure vault and view your notes and other stuff
+weather [location] - get weather forecast for your country, country in ISO 3166 alpha 2 format
+secure-vault       - enter the secure vault and view your notes and other secret stuff...
 password [options] - manage your password stuff
-monitor [options]  - get stats based on the component of your computer
