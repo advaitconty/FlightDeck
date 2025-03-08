@@ -4,6 +4,7 @@ from colorama import Fore, Style
 import colorama
 import file_path
 import timer.pomodoro
+import vault
 
 colorama.init(autoreset=True)
 
@@ -36,6 +37,10 @@ if len(sys.argv) > 1:
         except:
             print(Fore.RED + "⚠ Error: Invalid arguments" + Style.RESET_ALL)
             print("Usage: flightdeck solstice [work_time] [break_time]")
+
+    # FlightDeck Vault
+    elif command == "secure-vault":
+        vault.main_loop()
 
 
 else:
