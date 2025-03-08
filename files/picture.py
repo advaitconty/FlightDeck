@@ -56,6 +56,7 @@ def print_image(image_path):
 
         ascii_art += "\033[0m\n"
 
+    print("hello")
     print(ascii_art)
 
 if __name__ == "__main__":
