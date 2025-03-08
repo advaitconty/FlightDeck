@@ -6,7 +6,7 @@ import os
 import pyAesCrypt
 import platform
 from pathlib import Path
-from getpass import getpass
+import pickle
 
 BUFFER_SIZE = 64 * 1024
 
@@ -15,6 +15,7 @@ username = getpass.getuser()
 
 vault_entry = True
 unlocked = False
+first_entry = True
 
 def vault_location(os):
     if os == "Windows":
@@ -60,7 +61,7 @@ def decrypt_folder(folder_path, password):
 
 
 # New guy setup
-def first_entry():
+def welcome():
     global unlocked
     print("✈ Welcome to the FlightDeck Vault!")
     print("Since this is your first time, we'll need to set up your vault.")
@@ -81,9 +82,18 @@ def first_entry():
     unlocked = True
 
 def main_loop():
+    global first_entry, unlocked, vault_entry
+
+    try:
+        with open("data.pkl", "rb") as f:
+            first_entry = pickle.load(f)
+    except:
+        first_entry = True
+
     colorama.init(autoreset=True)
 
-    if vault_entry:
+
+    if not first_entry:
         print("✈ Welcome to the FlightDeck Vault!")
         print("Please start by unencrypting your vault.")
 
@@ -91,7 +101,7 @@ def main_loop():
         first_attempt = True
         new_vault = False
         while verifying_password:
-            password = getpass("Enter your password: ")
+            password = getpass.getpass("Enter your password: ")
 
             if not first_attempt and password == "HELP IT MOVED":
                 print("Let's get a new vault")
@@ -110,43 +120,55 @@ def main_loop():
             first_attempt = False
 
         if new_vault:
-            first_entry()
+            welcome()
+    elif first_entry:
+        welcome()
+        first_entry = False
+        with open("data.pkl", "wb") as f:
+            pickle.dump(first_entry, f)
 
-        print("Commands: help, exit, add, list, path")
+    print("Commands: help, exit, add, list, path")
 
-        help = f"""Welcome to the FlightDeck Secure Vault!
-        Current vault status: {"🔒" if not unlocked else "🔑"}
+    help = f"""
+    Welcome to the FlightDeck Secure Vault!
+    Current vault status: {"🔒" if not unlocked else "🔑"}
 
-        Commands:
-        help   - show this help message
-        exit   - exit the vault
-        add    - add a new note to your vault
-        list   - list all notes in your vault
-        path   - show the current path to your vault
-        rm     - remove a note from your vault
-        """
+    Commands:
+    help   - show this help message
+    exit   - exit the vault
+    add    - add a new note to your vault
+    list   - list all notes in your vault
+    tree   - show the tree structure of your vault
+    path   - show the current path to your vault
+    rm     - remove a note from your vault
+    """
 
-        while vault_entry:
-            command = input(f"{Fore.BLUE}{"🔒" if not unlocked else "🔑"} FlightDeck Vault{Fore.RESET} {Fore.GREEN}{username} at {hostname} {Fore.BLUE}✈{Fore.RESET}  ")
-            if command == "exit":
-                vault_entry = False
-                print("🔒 Lock your vault before you go!")
-                verifying_password = True
-                while verifying_password:
-                    password = getpass("Enter a password:")
-                    confirm_password = getpass("Enter again to confirm")
-                    if password == confirm_password:
-                        verifying_password = False
-                    else:
-                        print("Passwords do not match. Try again.")
+    while vault_entry:
+        command = input(f"{Fore.BLUE}{"🔒" if not unlocked else "🔑"} FlightDeck Vault{Fore.RESET} {Fore.GREEN}{username} at {hostname} {Fore.BLUE}✈{Fore.RESET}  ")
+        if command == "exit":
+            vault_entry = False
+            print("🔒 Lock your vault before you go!")
+            verifying_password = True
+            while verifying_password:
+                password = getpass.getpass("Enter a password: ")
+                confirm_password = getpass.getpass("Enter it again to confirm: ")
+                if password == confirm_password:
+                    verifying_password = False
+                else:
+                    print("Passwords do not match. Try again.")
 
-                path = vault_location(platform.system())
-                encrypt_folder(path, password)
-                print("Vault locked. Do not forget your password else you will lose access to your vault!")
-                print("See you soon!")
-            
-            elif command == "help":
-                print(help)
-            
-            else:
-                print("Invalid command. Type 'help' to see available commands.")
+            path = vault_location(platform.system())
+            encrypt_folder(path, password)
+            print("Vault locked. Do not forget your password else you will lose access to your vault!")
+            print("See you soon!")
+        
+        elif command == "help":
+            print(help)
+        
+
+
+        else:
+            print("Invalid command. Type 'help' to see available commands.")
+
+if __name__ == "__main__":
+    main_loop()
