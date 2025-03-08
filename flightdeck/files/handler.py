@@ -1,6 +1,6 @@
 import pathlib
-import files.picture
-import files.markdown
+import flightdeck.files.picture as picture
+import flightdeck.files.markdown as markdown
 
 def read_file(file):
     print(f"Reading file: {file}")
@@ -10,7 +10,7 @@ def read_file(file):
     image = [".jpg", ".jpeg", ".png"]
     
     if extension in image:
-        files.picture.print_image(file)
+        picture.print_image(file)
     elif extension == ".md":
-        files.markdown.print_markdown_fancy(file)
+        markdown.print_markdown_fancy(file)
 

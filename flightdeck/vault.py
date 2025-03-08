@@ -7,6 +7,7 @@ import pyAesCrypt
 import platform
 from pathlib import Path
 import pickle
+import subprocess
 
 BUFFER_SIZE = 64 * 1024
 
@@ -127,20 +128,20 @@ def main_loop():
         with open("data.pkl", "wb") as f:
             pickle.dump(first_entry, f)
 
-    print("Commands: help, exit, add, list, path")
+    print("Commands: help, exit, add, tree, path")
 
     help = f"""
     Welcome to the FlightDeck Secure Vault!
     Current vault status: {"🔒" if not unlocked else "🔑"}
 
     Commands:
-    help   - show this help message
-    exit   - exit the vault
-    add    - add a new note to your vault
-    list   - list all notes in your vault
-    tree   - show the tree structure of your vault
-    path   - show the current path to your vault
-    rm     - remove a note from your vault
+    help       - show this help message
+    exit       - exit the vault
+    add [file] - add a new note to your vault
+    tree       - show the tree structure of your vault
+    path       - show the current path to your vault
+    rm         - remove a note from your vault
+    sys [cmd]  - run a system command
     """
 
     while vault_entry:
@@ -165,7 +166,46 @@ def main_loop():
         elif command == "help":
             print(help)
         
+        elif command.startswith("add"):
+            try:
+                print(f"Adding a new note with the title '{command.split(' ', 1)[1]}.md'...")
+                with open(f"{vault_location(platform.system())}/{command.split(' ', 1)[1]}.md", "w") as f:
+                    f.write("")
+                    print("File created!")
+            except:
+                print("Error creating file. Did you provide a filename?")
+                
+            try:
+                if platform.system() == "Windows":
+                    subprocess.run(f"notepad {vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+                else:
+                    os.system(f"nano {vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+            except:
+                print("Error opening file. You will need to open it manually.")
+                print("P.S: If you are on macOS/Linux, please make sure GNU Nano is installed for this to work.")
+        
+        elif command.startswith("sys"):
+            print(f"Running system command: {command.split(' ', 1)[1]}")
+            subprocess.run(command.split(' ', 1)[1], shell=True)
 
+        elif command.startswith("rm"):
+            print(f"Removing note '{command.split(' ', 1)[1]}.md'...")
+            try:
+                os.remove(f"{vault_location(platform.system())}/{command.split(' ', 1)[1]}.md")
+                print("File removed!")
+            except FileNotFoundError:
+                print("File not found. Please enter a real file.")
+
+        elif command == "path":
+            print("To add your own file, the path of your vault is:")
+            print(vault_location(platform.system()))
+
+        elif command == "tree":
+            print("Showing tree structure of your vault...")
+            if platform.system() == "Windows":
+                os.system(f"tree /F /A {vault_location(platform.system())}")
+            else:
+                os.system(f"tree {vault_location(platform.system())}")
 
         else:
             print("Invalid command. Type 'help' to see available commands.")

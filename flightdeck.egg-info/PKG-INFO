@@ -1,3 +1,31 @@
+Metadata-Version: 2.2
+Name: flightdeck
+Version: 0.1.1
+Summary: A multi-tool CLI for the masses, with a file encrypter.
+Home-page: https://github.com/advaitconty/flightdeck
+Author: Advait Contractor
+Author-email: advait@advaitconty.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: rich
+Requires-Dist: pyAesCrypt
+Requires-Dist: pillow
+Requires-Dist: colorama
+Requires-Dist: windows-curses
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
 # ✈ FlightDeck
 Introduicing the all-in-one utility for your terminal, **FlightDeck**!
 Designed for the folks who love doing everything from the terminal, from a guy who loves everything from the terminal
