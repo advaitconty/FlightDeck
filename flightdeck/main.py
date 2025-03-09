@@ -73,6 +73,7 @@ def main_loop():
 
         # Solstice
         elif command == "solstice":
+            print("Opening Solstice...")
             try:
                 if len(sys.argv) == 3:
                     if sys.argv[2].isdigit():
