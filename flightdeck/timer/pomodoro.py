@@ -151,7 +151,7 @@ def pomodoro_timer(stdscr, work_time=25, break_time=5, image_path="background.jp
         pass
     finally:
         curses.curs_set(1)
-        curses.endwin()
+        exit(0)
 
 def start_timer(work_time=25, break_time=5, image_path="background.jpg"):
     import pathlib

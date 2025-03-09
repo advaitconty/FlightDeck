@@ -87,7 +87,7 @@ def main_loop():
             except:
                 print(Fore.RED + "Error: Failed to launch Solstice" + Style.RESET_ALL)
                 print("Usage: flightdeck solstice [work_time] [break_time]")
-                if sys.platform() == "win32":
+                if sys.platform == "win32":
                     print("HINT: Check if windows-curses is installed")
 
         # FlightDeck Vault
