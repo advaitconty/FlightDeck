@@ -1,14 +1,19 @@
 from setuptools import setup, find_packages
 import sys
 
-windows_deps = ["windows-curses"] if sys.platform == "win32" else []
+if sys.platform == "win32":
+    windows_deps = ['windows-curses']
+else:
+    windows_deps = []
+
+print(windows_deps)
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name='flightdeck',
-    version='0.1.1',
+    version='0.1.3',
     packages=find_packages(),
     entry_points={
         'console_scripts': [
