@@ -74,14 +74,14 @@ def main_loop():
         # Solstice
         elif command == "solstice":
             try:
-                if len(sys.argv) > 2:
+                if len(sys.argv) == 3:
                     if sys.argv[2].isdigit():
                         pomodoro.start_timer(work_time=int(sys.argv[2]))
                     elif sys.argv[2] == "help":
                         print("Usage: flightdeck solstice [work_time] [break_time]")
-                elif len(sys.argv) > 3:
+                elif len(sys.argv) == 4:
                     pomodoro.start_timer(work_time=int(sys.argv[2]), break_time=int(sys.argv[3]))
-                elif len(sys.argv) > 1:
+                elif len(sys.argv) == 2:
                     pomodoro.start_timer()
             except:
                 print(Fore.RED + "⚠ Error: Invalid arguments" + Style.RESET_ALL)
