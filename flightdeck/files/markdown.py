@@ -12,9 +12,9 @@ def print_markdown_fancy(file):
     for line in lines:
         line = line.replace("\n", "")
         if line.startswith("# "):
-            print(f"{Style.BRIGHT + Fore.WHITE}┌─{len(line[2:]) * "─"}───┐")
+            print(f"{Style.BRIGHT + Fore.WHITE}┌─{len(line[2:]) * '─'}───┐")
             print(Style.RESET_ALL + Fore.WHITE + Style.BRIGHT + "| " + line + " |")
-            print(f"{Style.BRIGHT + Fore.WHITE}└─{len(line[2:]) * "─"}───┘")
+            print(f"{Style.BRIGHT + Fore.WHITE}└─{len(line[2:]) * '─'}───┘")
         elif line.startswith("## "):
             print(Style.RESET_ALL + Back.YELLOW + Fore.WHITE + line + "" + Style.RESET_ALL)
         elif line.startswith("### "):
