@@ -13,7 +13,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='flightdeck',
-    version='10.0.7',
+    version='10.0.10',
     packages=find_packages(),
     entry_points={
         'console_scripts': [

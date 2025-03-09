@@ -85,8 +85,10 @@ def main_loop():
                 elif len(sys.argv) == 2:
                     pomodoro.start_timer()
             except:
-                print(Fore.RED + "⚠ Error: Invalid arguments" + Style.RESET_ALL)
+                print(Fore.RED + "Error: Failed to launch Solstice" + Style.RESET_ALL)
                 print("Usage: flightdeck solstice [work_time] [break_time]")
+                if sys.platform() == "win32":
+                    print("HINT: Check if windows-curses is installed")
 
         # FlightDeck Vault
         elif command == "secure-vault":
