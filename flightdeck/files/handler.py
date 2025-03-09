@@ -9,8 +9,11 @@ def read_file(file):
 
     image = [".jpg", ".jpeg", ".png"]
     
-    if extension in image:
-        picture.print_image(file)
-    elif extension == ".md":
-        markdown.print_markdown_fancy(file)
+    try:
+        if extension in image:
+            picture.print_image(file)
+        elif extension == ".md":
+            markdown.print_markdown_fancy(file)
+    except:
+        print("Error reading. Please try again or make sure the file exists.")
 

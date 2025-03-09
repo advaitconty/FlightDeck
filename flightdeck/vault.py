@@ -132,7 +132,7 @@ def main_loop():
 
     help = f"""
     Welcome to the FlightDeck Secure Vault!
-    Current vault status: {"🔒" if not unlocked else "🔑"}
+    Current vault status: {'🔒' if not unlocked else '🔑'}
 
     Commands:
     help       - show this help message
@@ -145,7 +145,7 @@ def main_loop():
     """
 
     while vault_entry:
-        command = input(f"{Fore.BLUE}{"🔒" if not unlocked else "🔑"} FlightDeck Vault{Fore.RESET} {Fore.GREEN}{username} at {hostname} {Fore.BLUE}✈{Fore.RESET}  ")
+        command = input(f"{Fore.BLUE}{'🔒' if not unlocked else '🔑'} FlightDeck Vault{Fore.RESET} {Fore.GREEN}{username} at {hostname} {Fore.BLUE}✈{Fore.RESET}  ")
         if command == "exit":
             vault_entry = False
             print("🔒 Lock your vault before you go!")
