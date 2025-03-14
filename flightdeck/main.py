@@ -9,6 +9,7 @@ import random
 import string
 import flightdeck.weather as weather
 import flightdeck.apikey as apikey
+from flightdeck.passwords import create_password
 
 WORDS = ["apple", "tiger", "ocean", "planet", "rocket", "guitar", "silver", "forest", "sunset", "mountain"]
 
@@ -25,27 +26,6 @@ weather [location] - get weather forecast for your country, country in ISO 3166 
 secure-vault       - enter the secure vault and view your notes and other secret stuff...
 password [options] - manage your password stuff
 """
-
-def create_password(characters=14, lowercase=True, uppercase=True, numbers=True, symbols=True, readable=False):
-    if readable:
-        num_words = max(2, characters // 6)  # Adjust number of words based on length
-        password = "-".join(random.choices(WORDS, k=num_words)).capitalize()
-        if numbers:
-            password += str(random.randint(10, 99))
-
-        print(password)
-    else:
-        pool = ""
-        if lowercase:
-            pool += string.ascii_lowercase
-        if uppercase:
-            pool += string.ascii_uppercase
-        if numbers:
-            pool += string.digits
-        if symbols:
-            pool += "!@#$%^&*()_-+=<>?/"
-
-        print("".join(random.choices(pool, k=characters)))
 
 def convert_text_to_bool(text):
     if text.lower() == "true":
