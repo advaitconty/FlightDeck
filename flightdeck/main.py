@@ -17,7 +17,7 @@ from .files import handler
 from colorama import Fore, Style
 import colorama
 import flightdeck.file_path as file_path
-from .timer import pomodoro
+from . import pomodoro
 import requests
 try:
     import flightdeck.vault as vault
@@ -57,7 +57,7 @@ import flightdeck.apikey as apikey
 
 WORDS = ["apple", "tiger", "ocean", "planet", "rocket", "guitar", "silver", "forest", "sunset", "mountain"]
 
-help = """flightdeck v1.10.11 {}
+help = """flightdeck v1.10.20 {}
 ✈ usage: flightdeck [commands] [options | file (if command requires)] ...
 
 flightdeck is a versatile utility that allows you to do many things. it adds
@@ -119,7 +119,6 @@ def main_loop():
 
         # Solstice
         elif command == "solstice":
-            print("Opening Solstice...")
             try:
                 if len(sys.argv) == 3:
                     if sys.argv[2].isdigit():
@@ -131,6 +130,7 @@ def main_loop():
                 elif len(sys.argv) == 2:
                     pomodoro.start_timer()
             except Exception as e:
+                print(e)
                 print(Fore.RED + "Error: Failed to launch Solstice" + Style.RESET_ALL)
                 print("Usage: flightdeck solstice [work_time] [break_time]")
                 if sys.platform == "win32":
@@ -175,5 +175,5 @@ def main_loop():
             print("Check flightdeck help for more info")
 
     else:
-        print("FlightDeck v1.0.0")
+        print("FlightDeck v10.10.20")
         print("Please add a command to test")
