@@ -14,6 +14,9 @@ pip install flightdeck
 ```
 However, `nano` is recommended but not compulsary on macOS/Linux. Please make sure your version of Python also has `curses` installed.
 
+## Usage
+To use flightdeck, just run `flightdeck [command]` in your terminal. For more information on the commands and features, run `flightdeck help`
+
 ## Features
 
 ### FlightDeck Open
