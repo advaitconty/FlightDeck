@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
 Name: flightdeck
-Version: 10.0.3
+Version: 10.10.10
 Summary: A multi-tool CLI for the masses, with a file encrypter.
 Home-page: https://github.com/advaitconty/flightdeck
 Author: Advait Contractor
@@ -15,7 +15,6 @@ Requires-Dist: rich
 Requires-Dist: pyAesCrypt
 Requires-Dist: pillow
 Requires-Dist: colorama
-Requires-Dist: windows-curses
 Dynamic: author
 Dynamic: author-email
 Dynamic: classifier

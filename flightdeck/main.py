@@ -1,15 +1,59 @@
 import sys
+import os
+
+if sys.platform == "win32":
+    try:
+        import curses
+    except:
+        print("Error detected importing curses.")
+        print("Since you are on Windows, auto-installing windows-curses...")
+
+        os.system("pip install windows-curses")
+        print("windows-curses installed successfully.")
+        print("Please restart the program.")
+        exit(0)
+
 from .files import handler
 from colorama import Fore, Style
 import colorama
 import flightdeck.file_path as file_path
 from .timer import pomodoro
-import flightdeck.vault as vault
+import requests
+try:
+    import flightdeck.vault as vault
+except:
+    print("Error! FlightDeck Vault failed to import. This file may have been deleted by your antivirus.")
+    print("FlightDeck will try to restore a working copy of it.")
+    print("If you do not allow it into your anti-virus, it will automatically be deleted again by it.")
+    agreed = input("Have you allowed vault.py in your anti-virus? (y/n) ")
+    if agreed.lower == "y":
+        print("Starting FlightDeck Secure-Vault restoration...")
+        file_url = "https://hc-cdn.hel1.your-objectstorage.com/s/v3/55a071ae3d661e98b74a59dd86a165149f225851_vault.py"
+        filename = file_url.split("/")[-1]
+
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        filepath = os.path.join(current_dir, filename)
+
+        response = requests.get(url, stream=True)
+        if response.status_code == 200:
+            with open(filepath, "wb") as file:
+                for chunk in response.iter_content(1024):
+                    file.write(chunk)
+            print(f"Restored FlightDeck Secure-Vault to {filepath}")
+            print("Will try importing again")
+            try:
+                import flightdeck.vault as vault
+            except:
+                print("Failed to import FlightDeck Secure-Vault. Something else went wrong.")
+                exit(0)
+        else:
+            print("Failed to download file. FlightDeck will quit now.")
+            exit(0)
+
 import random
 import string
 import flightdeck.weather as weather
 import flightdeck.apikey as apikey
-from flightdeck.passwords import create_password
 
 WORDS = ["apple", "tiger", "ocean", "planet", "rocket", "guitar", "silver", "forest", "sunset", "mountain"]
 
@@ -26,6 +70,28 @@ weather [location] - get weather forecast for your country, country in ISO 3166 
 secure-vault       - enter the secure vault and view your notes and other secret stuff...
 password [options] - manage your password stuff
 """
+
+def create_password(characters=14, lowercase=True, uppercase=True, numbers=True, symbols=True, readable=False):
+    if readable:
+        num_words = max(2, characters // 6)  # Adjust number of words based on length
+        password = "-".join(random.choices(WORDS, k=num_words)).capitalize()
+        if numbers:
+            password += str(random.randint(10, 99))
+
+        print(password)
+    else:
+        pool = ""
+        if lowercase:
+            pool += string.ascii_lowercase
+        if uppercase:
+            pool += string.ascii_uppercase
+        if numbers:
+            pool += string.digits
+        if symbols:
+            pool += "!@#$%^&*()_-+=<>?/"
+
+        print("".join(random.choices(pool, k=characters)))
+
 
 def convert_text_to_bool(text):
     if text.lower() == "true":

@@ -3,4 +3,3 @@ rich
 pyAesCrypt
 pillow
 colorama
-windows-curses

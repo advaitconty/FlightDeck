@@ -13,7 +13,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='flightdeck',
-    version='10.0.14',
+    version='10.10.10',
     packages=find_packages(),
     entry_points={
         'console_scripts': [
@@ -26,7 +26,7 @@ setup(
         'pyAesCrypt',
         'pillow',
         'colorama'
-    ] + windows_deps,
+    ],
     author='Advait Contractor',
     author_email='advait@advaitconty.com',
     description='A multi-tool CLI for the masses, with a file encrypter.',
