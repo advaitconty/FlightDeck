@@ -140,7 +140,7 @@ def pomodoro_timer(stdscr, work_time=25, break_time=5, image_path="background.jp
                 toggle_pause()
             elif key == ord('e') or key == ord('E'):
                 exit_flag = True #set exit flag
-                break
+                exit(0)
             elif countdown_thread and not countdown_thread.is_alive() and not pause_flag:
                 play_sound(phase)
                 phase = "Break" if phase == "Work" else "Work"
@@ -150,8 +150,8 @@ def pomodoro_timer(stdscr, work_time=25, break_time=5, image_path="background.jp
     except KeyboardInterrupt:
         pass
     finally:
-        curses.curs_set(1)
         exit(0)
+        curses.curs_set(1)
 
 def start_timer(work_time=25, break_time=5, image_path="background.jpg"):
     import pathlib
