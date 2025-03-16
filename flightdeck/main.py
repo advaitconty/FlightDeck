@@ -57,7 +57,7 @@ import flightdeck.apikey as apikey
 
 WORDS = ["apple", "tiger", "ocean", "planet", "rocket", "guitar", "silver", "forest", "sunset", "mountain"]
 
-help = """flightdeck v1.0-testing {}
+help = """flightdeck v1.10.11 {}
 ✈ usage: flightdeck [commands] [options | file (if command requires)] ...
 
 flightdeck is a versatile utility that allows you to do many things. it adds
